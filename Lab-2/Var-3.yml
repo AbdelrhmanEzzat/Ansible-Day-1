@@ -1,0 +1,10 @@
+- name: Install package using playbook level variables
+  hosts: web_servers
+  tasks:
+    - name: Print my Name
+      debug:
+        msg:
+          My_name: "{{ package_name }}"
+          Version: "{{ package_version }}"
+
+#on CMD level

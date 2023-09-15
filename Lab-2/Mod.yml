@@ -1,0 +1,21 @@
+---
+- name: play1
+  gather_facts: false
+  hosts:  web_servers
+
+  tasks:
+    - name: update
+      apt:
+        update_cache: true
+        name: nginx
+        state: latest
+
+    - name: Copy index.html
+      copy:
+        src: ./index.html
+        dest: /var/www/html/index.html
+
+    - name: Restart Nginx
+      ansible.builtin.sysvinit:
+        name: nginx
+        state: restarted

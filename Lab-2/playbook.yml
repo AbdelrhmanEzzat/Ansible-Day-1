@@ -1,0 +1,8 @@
+- name: play1
+  hosts: web_servers
+  gather_facts: false
+  tasks:
+  
+  - name: health check
+    apt:
+      update_cache: true
