@@ -1,0 +1,17 @@
+- name: my play with register
+  hosts: web_servers
+  vars_files: ./vars.yml
+
+  tasks:
+
+  - name: my task with loops
+    apt:
+      name: "{{ item.package_name }}"
+      state: "{{ item.package_state }}"
+    loop: "{{ packages }}"
+    when: ansible_facts['distribution'] ==  "Ubuntu"
+    register: x
+
+  - name: debugging 
+    debug:
+      msg: "{{ x }}"

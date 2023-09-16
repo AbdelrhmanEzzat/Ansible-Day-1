@@ -1,0 +1,15 @@
+- name: my play
+  hosts: web_servers
+  vars_files: ./vars.yml
+
+  tasks:
+
+  - name: my task with loops
+    apt:
+      name: nginx
+      state: latest
+  
+  handlers:
+
+  - name: task1  
+    ping:

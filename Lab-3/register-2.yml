@@ -1,0 +1,28 @@
+---
+- name: Install and restart service
+  hosts: all
+
+  tasks:
+    - name: Install Nginx or httpd
+      apt:
+        name: nginx
+        state: present
+      register: install_result
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      register: install_result
+      when: ansible_distribution == 'CentOS'
+
+    - name: Debug install_result
+      debug:
+        var: install_result
+
+    - name: Restart service if installation changed or not failed
+      service:
+        name: "{{ 'nginx' if ansible_distribution == 'Ubuntu' else 'httpd' }}"
+        state: restarted
+      when: install_result.changed or not install_result.failed

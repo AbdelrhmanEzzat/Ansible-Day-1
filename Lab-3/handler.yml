@@ -1,0 +1,48 @@
+---
+- name: Install and deploy package
+  hosts: web_servers
+  vars:
+    package_name: nginx
+    my_message: hello from Abdo
+    htmljs_file: ./index.html.js
+
+    
+
+
+    file_names:
+      - script.js
+      - style.css
+    current_directory: ./files
+
+  tasks:
+    - name: Install package
+      apt:
+        name: "{{ package_name }}"
+        state: present
+      notify: 
+        - Copy files
+        - Restart service
+
+      changed_when: 1 == 1
+
+    - name: templating 
+      template:
+        src: "{{ htmljs_file }}"
+        dest: /var/www/html/index.html
+      notify: 
+        - Restart service
+      changed_when: 1 == 1
+
+  handlers:
+
+    - name: Copy files
+      copy:
+        src: "{{ current_directory }}/{{ item }}"
+        dest: "/var/www/html/{{ item }}"
+      loop: "{{ file_names }}"
+
+
+    - name: Restart service
+      ansible.builtin.sysvinit:
+        name: nginx
+        state: restarted

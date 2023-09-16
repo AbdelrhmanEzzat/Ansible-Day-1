@@ -1,0 +1,11 @@
+- name: pl1
+  gather_facts: false 
+  hosts: web_servers
+  vars: 
+    my_message: hello from Abdo
+  tasks:
+
+    - name: templating 
+      template:
+        src: ./index.html.js
+        dest: /var/www/html/index.html
