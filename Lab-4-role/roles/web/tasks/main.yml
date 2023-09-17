@@ -1,0 +1,21 @@
+- name: Install pkm
+  package:
+    name: "{{ package_name }}"
+    state: present
+  register: install_result
+  changed_when: 1 == 1
+
+
+- name: copy files from controller to host
+  copy:
+    src: "{{ item }}"
+    dest: "/var/www/html/"
+  loop: "{{ my_files }}"
+  register: copy_result
+  when: install_result.changed
+
+- name: Restart service
+  ansible.builtin.sysvinit:
+    name: nginx
+    state: restarted
+  when: copy_result.changed

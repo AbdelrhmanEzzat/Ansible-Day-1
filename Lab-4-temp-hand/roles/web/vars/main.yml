@@ -1,0 +1,7 @@
+package_name: nginx
+my_message: Hello From Abdelrhman 
+temp_name: templating
+
+my_files:
+  - style.css
+  - script.js

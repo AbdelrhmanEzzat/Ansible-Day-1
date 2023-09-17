@@ -1,0 +1,6 @@
+[web_servers]
+172.17.0.2
+
+[fullstack:children]
+web_servers
+

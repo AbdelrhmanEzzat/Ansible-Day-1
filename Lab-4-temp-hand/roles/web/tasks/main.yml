@@ -1,0 +1,15 @@
+- name: Install pkm
+  package:
+    name: "{{ package_name }}"
+    state: present
+  changed_when: 1 == 1
+  notify: 
+        - Copy files
+        - Restart service
+
+- name: "{{ temp_name }}" 
+  template:
+    src: index.html.js
+    dest: /var/www/html/index.html
+  notify: 
+      - Restart service
